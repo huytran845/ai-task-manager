@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 
 // CSS File
-import './index.css';
+import '@/index.css';
 
 // Routes
 import router from '@/routes';
