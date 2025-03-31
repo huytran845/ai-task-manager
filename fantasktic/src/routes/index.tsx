@@ -1,14 +1,17 @@
 // Node Modules
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from "react-router";
 
 // Pages
-import HomePage from '@/pages/HomePage';
+import HomePage from "@/pages/HomePage";
+
+// Error Pages
+import RootErrorPage from "@/pages/RootErrorPage";
 
 // Layouts
-import RootLayout from '@/layouts/RootLayout';
+import RootLayout from "@/layouts/RootLayout";
 
 // Types
-import type { RouteObject } from 'react-router';
+import type { RouteObject } from "react-router";
 
 const rootRouteChildren: RouteObject[] = [
   {
@@ -19,8 +22,9 @@ const rootRouteChildren: RouteObject[] = [
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <RootLayout />,
+    errorElement: <RootErrorPage />,
     children: rootRouteChildren,
   },
 ]);
