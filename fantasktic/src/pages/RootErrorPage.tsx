@@ -29,7 +29,7 @@ const RootErrorPage = () => {
             : "This error is on our task list. Please try again later."}
         </p>
 
-        <div className="">
+        <div className="flex gap-2">
           <Button asChild>
             <Link to="/">
               Return Home <span className="material-icons">home</span>

@@ -3,6 +3,8 @@ import { createBrowserRouter } from "react-router";
 
 // Pages
 import HomePage from "@/pages/HomePage";
+import RegisterPage from "@/pages/RegisterPage";
+import LoginPage from "@/pages/LoginPage";
 
 // Error Pages
 import RootErrorPage from "@/pages/RootErrorPage";
@@ -17,6 +19,14 @@ const rootRouteChildren: RouteObject[] = [
   {
     index: true,
     element: <HomePage />,
+  },
+  {
+    path: "register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "login",
+    element: <LoginPage />,
   },
 ];
 
