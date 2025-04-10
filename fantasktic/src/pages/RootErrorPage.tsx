@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 
 // Assets
 import { pageNotFound } from "@/assets";
+import { HomeIcon } from "lucide-react";
+import { InboxIcon } from "lucide-react";
 
 const RootErrorPage = () => {
   const error = useRouteError();
@@ -32,7 +34,7 @@ const RootErrorPage = () => {
         <div className="flex gap-2">
           <Button asChild>
             <Link to="/">
-              Return Home <span className="material-icons">home</span>
+              <HomeIcon /> Return Home
             </Link>
           </Button>
 
@@ -41,7 +43,7 @@ const RootErrorPage = () => {
             variant="ghost"
           >
             <Link to="/app/inbox">
-              View Inbox <span className="material-icons">inbox</span>
+              <InboxIcon /> View Inbox
             </Link>
           </Button>
         </div>

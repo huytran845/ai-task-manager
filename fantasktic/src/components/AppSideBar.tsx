@@ -16,12 +16,22 @@ import {
   SidebarMenuButton,
   SidebarMenuBadge,
 } from "@/components/ui/sidebar";
-import { Collapsible } from "@/components/ui/collapsible";
-import Logo from "@/components/Logo";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 import { UserButton } from "@clerk/clerk-react";
+import Logo from "@/components/Logo";
+import TaskFormDialog from "@/components/TaskFormDialog";
 
 // Assets
-import { CirclePlus } from "lucide-react";
+import { CirclePlus, Plus, ChevronRight } from "lucide-react";
 
 // Constants
 import { SIDEBAR_LINKS } from "@/constants";
@@ -44,9 +54,11 @@ const AppSidebar = () => {
             <SidebarMenu>
               {/* Task Creation Button */}
               <SidebarMenuItem>
-                <SidebarMenuButton className="!text-primary">
-                  <CirclePlus /> Add Task
-                </SidebarMenuButton>
+                <TaskFormDialog>
+                  <SidebarMenuButton className="!text-primary">
+                    <CirclePlus /> Add Task
+                  </SidebarMenuButton>
+                </TaskFormDialog>
               </SidebarMenuItem>
 
               {/* Sidebar Options */}
@@ -67,9 +79,48 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
-        </SidebarGroup>
+        {/* All Projects */}
+        <Collapsible
+          defaultOpen
+          className="group/collapsible"
+        >
+          <SidebarGroup>
+            <SidebarGroupLabel
+              asChild
+              className="text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+            >
+              <CollapsibleTrigger>
+                <ChevronRight className="me-2 transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                Projects
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+
+            <Tooltip
+              delayDuration={400}
+              disableHoverableContent
+            >
+              <TooltipTrigger asChild>
+                <SidebarGroupAction aria-label="Add Project">
+                  <Plus />
+                </SidebarGroupAction>
+              </TooltipTrigger>
+
+              <TooltipContent side="right">Add Project</TooltipContent>
+            </Tooltip>
+
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <p className="text-muted-foreground text-sm p-2 pl-4">
+                      Empty... press + to add projects!
+                    </p>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
       </SidebarContent>
 
       <SidebarFooter>
