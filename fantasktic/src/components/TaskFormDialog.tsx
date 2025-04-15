@@ -1,3 +1,7 @@
+// Node Modules
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
+
 // Components
 import {
   Dialog,
@@ -13,8 +17,15 @@ import React from "react";
 import { eventNames } from "process";
 
 const TaskFormDialog: React.FC<PropsWithChildren> = ({ children }) => {
+  const location = useLocation();
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog modal>
+    <Dialog
+      modal
+      open={open}
+      onOpenChange={setOpen}
+    >
       <DialogTitle className="hidden">Create your Task!</DialogTitle>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
@@ -22,6 +33,7 @@ const TaskFormDialog: React.FC<PropsWithChildren> = ({ children }) => {
         onInteractOutside={(event) => {
           event?.preventDefault();
         }}
+        aria-describedby={undefined}
         className="p-0 border-0 !rounded-xl"
       >
         <TaskForm />

@@ -1,5 +1,9 @@
 // Node Modules
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import * as chrono from "chrono-node";
+
+// Custom Modules
+import { formatCustomDate, getTaskDateColor, cn } from "@/lib/utils";
 
 // Components
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -37,9 +41,69 @@ import {
   SendHorizonalIcon,
 } from "lucide-react";
 
-const TaskForm = () => {
+// Types
+import type { ClassValue } from "clsx";
+import type { TaskForm } from "@/types";
+
+type TaskFormProps = {
+  defaultFormData?: TaskForm;
+  className?: ClassValue;
+  mode: "create" | "edit";
+  onCancel?: () => void;
+  onSumbit?: (formData: TaskForm) => void;
+};
+
+const DEFAULT_FORM_DATA: TaskForm = {
+  content: "",
+  due_date: null,
+  projectId: null,
+};
+
+const TaskForm = ({
+  defaultFormData = DEFAULT_FORM_DATA,
+  className,
+  mode,
+  onCancel,
+  onSubmit,
+}) => {
   const [dateOpen, setDateOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+
+  const [taskContent, setTaskContent] = useState(defaultFormData.content);
+  const [dueDate, setDueDate] = useState(defaultFormData.due_date);
+
+  const [projectId, setProjectId] = useState(defaultFormData.projectId);
+  const [projectName, setProjectName] = useState("");
+  const [projectColorHex, setProjectColorHex] = useState("");
+
+  const [formData, setFormData] = useState(defaultFormData);
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      content: taskContent,
+      due_date: dueDate,
+      projectId: projectId,
+    }));
+  }, [taskContent, dueDate, projectId]);
+
+  useEffect(() => {
+    const chronoParsed = chrono.parse(taskContent);
+
+    if (chronoParsed.length) {
+      const lastDate = chronoParsed[chronoParsed.length - 1];
+      setDueDate(lastDate.date());
+    }
+  }, [taskContent]);
+
+  const handleSumbit = useCallback(() => {
+    if (!taskContent) return;
+    console.log(formData);
+    if (onSubmit) onSubmit(formData);
+
+    setTaskContent("");
+    setDueDate(null);
+  }, [taskContent, onSubmit, formData]);
 
   return (
     <Card className="focus-within:border-foreground/30">
@@ -48,6 +112,10 @@ const TaskForm = () => {
           className="!border-0 !ring-0 mb-2 p-1"
           placeholder="After getting the groceries, take a walk in the park."
           autoFocus
+          value={taskContent}
+          onInput={(taskInputEvent) =>
+            setTaskContent(taskInputEvent.currentTarget.value)
+          }
         />
 
         <div className="ring-1 ring-border rounded-md max-w-max">
@@ -61,8 +129,10 @@ const TaskForm = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setDateOpen((prev) => !prev)}
+                className={cn(getTaskDateColor(dueDate, false))}
               >
-                <CalendarIcon /> Due Date
+                <CalendarIcon />
+                {dueDate ? formatCustomDate(dueDate) : "Due Date"}
               </Button>
             </PopoverTrigger>
 
@@ -71,27 +141,34 @@ const TaskForm = () => {
                 mode="single"
                 disabled={{ before: new Date() }}
                 initialFocus
+                onSelect={(selected) => {
+                  setDueDate(selected || null);
+                  setDateOpen(false);
+                }}
               />
             </PopoverContent>
           </Popover>
 
-          <Tooltip
-            delayDuration={400}
-            disableHoverableContent
-          >
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="px-2 -ms-2 mt-1"
-                aria-label="Remove Due Date"
-              >
-                <XIcon />
-              </Button>
-            </TooltipTrigger>
+          {dueDate && (
+            <Tooltip
+              delayDuration={400}
+              disableHoverableContent
+            >
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="px-2 -ms-2 mt-1"
+                  aria-label="Remove Due Date"
+                  onClick={() => setDueDate(null)}
+                >
+                  <XIcon />
+                </Button>
+              </TooltipTrigger>
 
-            <TooltipContent>Remove Due Date</TooltipContent>
-          </Tooltip>
+              <TooltipContent>Remove Due Date</TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </CardContent>
 
@@ -106,7 +183,7 @@ const TaskForm = () => {
             <Button
               variant="ghost"
               role="combobox"
-              aria-expanded={false}
+              aria-expanded={searchOpen}
               onClick={() => setSearchOpen((prev) => !prev)}
               className="max-w-max"
             >
@@ -181,12 +258,20 @@ const TaskForm = () => {
         </Popover>
 
         <div className="flex items-center gap-2">
-          <Button variant="secondary">
+          <Button
+            variant="secondary"
+            onClick={onCancel}
+          >
             <span className="max-md:hidden">Cancel</span> <XIcon />
           </Button>
 
-          <Button>
-            <span className="max-md:hidden">Add Task</span>{" "}
+          <Button
+            disabled={!taskContent}
+            onClick={() => handleSumbit()}
+          >
+            <span className="max-md:hidden">
+              {mode === "create" ? "Add Task" : "Save Changes"}
+            </span>
             <SendHorizonalIcon />
           </Button>
         </div>
