@@ -50,12 +50,12 @@ type TaskFormProps = {
   className?: ClassValue;
   mode: "create" | "edit";
   onCancel?: () => void;
-  onSumbit?: (formData: TaskForm) => void;
+  onSubmit?: (formData: TaskForm) => void;
 };
 
 const DEFAULT_FORM_DATA: TaskForm = {
-  content: "",
-  due_date: null,
+  taskContent: "",
+  dueDate: null,
   projectId: null,
 };
 
@@ -69,8 +69,8 @@ const TaskForm = ({
   const [dateOpen, setDateOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  const [taskContent, setTaskContent] = useState(defaultFormData.content);
-  const [dueDate, setDueDate] = useState(defaultFormData.due_date);
+  const [taskContent, setTaskContent] = useState(defaultFormData.taskContent);
+  const [dueDate, setDueDate] = useState(defaultFormData.dueDate);
 
   const [projectId, setProjectId] = useState(defaultFormData.projectId);
   const [projectName, setProjectName] = useState("");
@@ -81,8 +81,8 @@ const TaskForm = ({
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      content: taskContent,
-      due_date: dueDate,
+      taskContent: taskContent,
+      dueDate: dueDate,
       projectId: projectId,
     }));
   }, [taskContent, dueDate, projectId]);
@@ -98,7 +98,7 @@ const TaskForm = ({
 
   const handleSumbit = useCallback(() => {
     if (!taskContent) return;
-    console.log(formData);
+
     if (onSubmit) onSubmit(formData);
 
     setTaskContent("");

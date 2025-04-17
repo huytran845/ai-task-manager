@@ -1,6 +1,7 @@
 // Node Modules
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useFetcher } from "react-router";
+import { startOfToday } from "date-fns";
 
 // Components
 import {
@@ -18,6 +19,7 @@ import { eventNames } from "process";
 
 const TaskFormDialog: React.FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation();
+  const fetcher = useFetcher();
   const [open, setOpen] = useState(false);
 
   return (
@@ -36,7 +38,24 @@ const TaskFormDialog: React.FC<PropsWithChildren> = ({ children }) => {
         aria-describedby={undefined}
         className="p-0 border-0 !rounded-xl"
       >
-        <TaskForm />
+        <TaskForm
+          defaultFormData={{
+            taskContent: "",
+            dueDate: location.pathname === "/app/today" ? startOfToday() : null,
+            projectId: null,
+          }}
+          mode="create"
+          onCancel={() => setOpen(false)}
+          onSubmit={(formData) => {
+            fetcher.submit(JSON.stringify(formData), {
+              action: "/app",
+              method: "POST",
+              encType: "application/json",
+            });
+
+            setOpen(false);
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

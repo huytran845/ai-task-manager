@@ -9,16 +9,16 @@ type Project = {
 type ProjectForm = {
   id: string | null;
   name: string;
-  color_name: string;
-  color_hex: string;
-  ai_task_gen: boolean;
-  task_gen_prompt: string;
+  colorName: string;
+  colorHex: string;
+  aiTaskGen: boolean;
+  taskGenPrompt: string;
 };
 
 type Task = {
   id?: string;
-  content: string;
-  due_date: Date | null;
+  taskContent: string;
+  dueDate: Date | null;
   completed?: boolean;
   project: Project | null;
   userId: string;
@@ -26,8 +26,8 @@ type Task = {
 
 type TaskForm = {
   id?: string;
-  content: string;
-  due_date: Date | null;
+  taskContent: string;
+  dueDate: Date | null;
   completed?: boolean;
   projectId: string | null;
 };

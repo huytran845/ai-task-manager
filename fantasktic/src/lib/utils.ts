@@ -15,6 +15,7 @@ import {
   isTomorrow,
   startOfToday,
 } from "date-fns";
+import { redirect } from "react-router";
 
 export function toTitleCase(capitalize: string) {
   return capitalize[0].toUpperCase() + capitalize.slice(1);
@@ -70,4 +71,27 @@ export function getTaskDateColor(
   if (isTomorrow(dueDate) && !completed) {
     return "text-amber-500";
   }
+}
+
+/* Generates a unique ID by combining current time and a random number
+This function creates an identifier using the current time in miliseconds (converted to a base-36 string)
+and then concatenated wtih a random number.
+The resulting base-36 string is sliced to remove unnecessary characters.
+
+@retruns {string} the unique identifying string */
+
+export function generateID() {
+  return Math.random().toString(36).slice(8) + Date.now().toString(36);
+}
+
+/* If there is no user ID in the local storage, then we return to the auth sync page to renavigate the user. Otherwise returns the user ID. */
+export function getUserId(): string {
+  const clerkUserId = localStorage.getItem("clerkUserId");
+
+  if (!clerkUserId) {
+    redirect("/auth-sync");
+    return "";
+  }
+
+  return clerkUserId;
 }
