@@ -22,6 +22,25 @@ const TaskFormDialog: React.FC<PropsWithChildren> = ({ children }) => {
   const fetcher = useFetcher();
   const [open, setOpen] = useState(false);
 
+  // This useEffect provides the user with the ability to open the "add task dialog" with the "q" key press.
+  // @returns event cleanup function to prevent memory leaks.
+  useEffect(() => {
+    const listener = (event: KeyboardEvent) => {
+      if (event.key === "q") {
+        const target = event.target as HTMLElement;
+
+        if (target.localName === "textarea") return;
+
+        event.preventDefault();
+        setOpen(true);
+      }
+    };
+
+    document.addEventListener("keydown", listener);
+
+    return () => document.removeEventListener("keydown", listener);
+  }, []);
+
   return (
     <Dialog
       modal

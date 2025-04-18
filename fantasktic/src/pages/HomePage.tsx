@@ -11,7 +11,10 @@ import { heroBannerLg, heroBannerSm } from "@/assets";
 const HomePage = () => {
   return (
     <>
-      <Head title="Fantasktic - AI Creates Your Tasks So You Don't Have To!" />
+      <Head
+        title="Fantasktic - AI Creates Your Tasks So You Don't Have To!"
+        metaContent="Home page for Fantasktic, the AI task management and creation app."
+      />
 
       <section>
         <div className="container !px-8 grid grid-cols-1 gap-8 items-center xl:gap-12 xl:grid-cols-[1fr_1.5fr]">

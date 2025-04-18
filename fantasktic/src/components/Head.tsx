@@ -1,19 +1,21 @@
 // Node Modules
-import { Helmet, HelmetProvider } from "@dr.pogodin/react-helmet";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import React from "react";
 
 // Types
 type HeadProps = {
   title: string;
+  metaContent: string;
 };
 
-const Head: React.FC<HeadProps> = ({ title }) => {
+const Head: React.FC<HeadProps> = ({ title, metaContent }) => {
   return (
-    <HelmetProvider>
-      <Helmet>
-        <title>{title}</title>
-      </Helmet>
-    </HelmetProvider>
+    <Helmet title={title}>
+      <meta
+        name="description"
+        content={metaContent}
+      />
+    </Helmet>
   );
 };
 

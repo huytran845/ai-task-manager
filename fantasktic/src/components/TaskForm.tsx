@@ -116,6 +116,13 @@ const TaskForm = ({
           onInput={(taskInputEvent) =>
             setTaskContent(taskInputEvent.currentTarget.value)
           }
+          onKeyDown={(keyEvent) => {
+            if (keyEvent.key === "Enter") {
+              keyEvent.preventDefault();
+
+              handleSumbit();
+            }
+          }} // Prevents user from using next line, and binds it to submit instead.
         />
 
         <div className="ring-1 ring-border rounded-md max-w-max">
