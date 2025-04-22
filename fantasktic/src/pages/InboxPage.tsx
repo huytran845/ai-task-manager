@@ -9,7 +9,11 @@ const InboxPage = () => {
         title="Your Inbox - Fantasktic To-Do List and Project Management App"
         metaContent="The inbox that houses all the user's tasks that they've created."
       />
-      <TopAppBar />
+      <TopAppBar
+        title="Inbox"
+        taskCount={20}
+      />
+      <div className="h-[400vh]"></div>
     </>
   );
 };
