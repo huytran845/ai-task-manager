@@ -28,6 +28,7 @@ import {
 
 // Types
 import type { Models } from "appwrite";
+import { Task } from "@/types";
 
 type TaskCardProps = {
   id: string;
@@ -46,6 +47,11 @@ const TaskCard: React.FC<TaskCardProps> = ({
 }) => {
   const iconSize: number = 14;
   const fetcher = useFetcher();
+  const fetcherTask = fetcher.json as Task;
+  const task: Task = {
+    ...{ id, taskContent, completed, dueDate, projectId },
+    ...fetcherTask,
+  }; // Using spread syntax to merge the new and existing data to ensure no missing data occurs
   const [showTaskForm, setShowTaskForm] = useState(false);
 
   return (
@@ -57,18 +63,18 @@ const TaskCard: React.FC<TaskCardProps> = ({
             size="icon"
             className={cn(
               "group/button rounded-full w-5 h-5 mt-2",
-              completed && "bg-border",
+              task.completed && "bg-border",
             )}
             role="checkbox"
-            aria-checked={completed}
-            aria-label={`Mark task as ${completed ? "incomplete" : "complete"}`}
+            aria-checked={task.completed}
+            aria-label={`Mark task as ${task.completed ? "incomplete" : "complete"}`}
             aria-describedby="task-content"
           >
             <CheckIcon
               strokeWidth={4}
               className={cn(
                 "!w-5 !h-4 text-muted-foreground group-hover/button:opacity-100 transition-opacity",
-                completed ? "opacity-100" : "opacity-0",
+                task.completed ? "opacity-100" : "opacity-0",
               )}
             />
           </Button>
@@ -79,30 +85,30 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 id="task-content"
                 className={cn(
                   "text-sm max-md:me-16",
-                  completed && "text-muted-foreground line-through",
+                  task.completed && "text-muted-foreground line-through",
                 )}
               >
-                {taskContent}
+                {task.taskContent}
               </p>
             </CardContent>
             <CardFooter className="p-0 flex gap-4">
-              {dueDate && (
+              {task.dueDate && (
                 <div
                   className={cn(
                     "flex items-center gap-1 text-xs text-muted-foreground",
-                    getTaskDateColor(dueDate, completed),
+                    getTaskDateColor(task.dueDate, task.completed),
                   )}
                 >
                   <CalendarDaysIcon size={iconSize} />{" "}
-                  {formatCustomDate(dueDate)}
+                  {formatCustomDate(task.dueDate)}
                 </div>
               )}
 
               <div className="flex items-center gap-1 text-xs text-muted-foreground ms-auto">
                 <div className="truncate text-right">
-                  {projectId?.name || "Inbox"}
+                  {task.projectId?.name || "Inbox"}
                 </div>
-                {projectId ? (
+                {task.projectId ? (
                   <HashIcon size={iconSize} />
                 ) : (
                   <InboxIcon
@@ -115,7 +121,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           </Card>
 
           <div className="absolute top-1.5 right-0 bg-background ps-1 shadow-[-10px_0_5px_hsl(var(--background))] flex items-center gap-1 opacity-0 group-hover/card:opacity-100 focus-within:opacity-100 max-md:opacity-100">
-            {!completed && (
+            {!task.completed && (
               <Tooltip delayDuration={400}>
                 <TooltipTrigger asChild>
                   <Button
@@ -154,9 +160,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
         <TaskForm
           className="my-1"
           defaultFormData={{
-            id,
-            taskContent,
-            dueDate,
+            ...task,
             projectId: projectId && projectId?.$id,
           }}
           mode="edit"
@@ -167,6 +171,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
               method: "PUT",
               encType: "application/json",
             });
+
+            setShowTaskForm(false);
           }}
         />
       )}

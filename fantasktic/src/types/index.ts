@@ -20,7 +20,7 @@ type Task = {
   taskContent: string;
   dueDate: Date | null;
   completed?: boolean;
-  project: Project | null;
+  projectId: Project | null;
   userId: string;
 };
 
