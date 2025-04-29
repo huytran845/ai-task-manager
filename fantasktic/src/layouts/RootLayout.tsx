@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 
 // Assets
 import { logo } from "@/assets";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircleIcon } from "lucide-react";
 
 const RootLayout = () => {
   const navigation = useNavigation();
@@ -40,7 +40,7 @@ const RootLayout = () => {
               alt="Fantasktic Logo"
             />
 
-            <LoaderCircle className="text-muted-foreground animate-spin" />
+            <LoaderCircleIcon className="text-muted-foreground animate-spin" />
           </div>
         )}
       </div>

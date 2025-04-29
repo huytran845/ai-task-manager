@@ -8,8 +8,7 @@ import Footer from "@/components/Footer";
 
 // Assets
 import { pageNotFound } from "@/assets";
-import { HomeIcon } from "lucide-react";
-import { InboxIcon } from "lucide-react";
+import { HomeIcon, InboxIcon } from "lucide-react";
 
 const RootErrorPage = () => {
   const error = useRouteError();

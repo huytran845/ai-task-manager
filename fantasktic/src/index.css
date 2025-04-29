@@ -181,3 +181,7 @@
   @apply -mt-2 grid grid-cols-[minmax(0,1fr),max-content] gap-2 p-2;
   @apply -mt-2 flex justify-between items-center gap-2 p-2;
 } */
+
+/* .task-card-container {
+  @apply relative grid grid-cols-[max-content,minmax(0,1fr)] gap-4 border-b-2;
+} */

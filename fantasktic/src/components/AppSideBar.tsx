@@ -31,7 +31,7 @@ import Logo from "@/components/Logo";
 import TaskFormDialog from "@/components/TaskFormDialog";
 
 // Assets
-import { CirclePlus, Plus, ChevronRight } from "lucide-react";
+import { CirclePlusIcon, PlusIcon, ChevronRightIcon } from "lucide-react";
 
 // Constants
 import { SIDEBAR_LINKS } from "@/constants";
@@ -56,7 +56,7 @@ const AppSidebar = () => {
               <SidebarMenuItem>
                 <TaskFormDialog>
                   <SidebarMenuButton className="!text-primary">
-                    <CirclePlus /> Add Task
+                    <CirclePlusIcon /> Add Task
                   </SidebarMenuButton>
                 </TaskFormDialog>
               </SidebarMenuItem>
@@ -90,7 +90,7 @@ const AppSidebar = () => {
               className="text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
             >
               <CollapsibleTrigger>
-                <ChevronRight className="me-2 transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                <ChevronRightIcon className="me-2 transition-transform group-data-[state=open]/collapsible:rotate-90" />
                 Projects
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -101,7 +101,7 @@ const AppSidebar = () => {
             >
               <TooltipTrigger asChild>
                 <SidebarGroupAction aria-label="Add Project">
-                  <Plus />
+                  <PlusIcon />
                 </SidebarGroupAction>
               </TooltipTrigger>
 
