@@ -1,6 +1,6 @@
 // Node Modules
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useFetcher } from "react-router";
 
 // Custom Modules
@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
+import { toast } from "sonner";
 import TaskForm from "@/components/TaskForm";
 
 // Assets
@@ -53,6 +54,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
     ...fetcherTask,
   }; // Using spread syntax to merge the new and existing data to ensure no missing data occurs
   const [showTaskForm, setShowTaskForm] = useState(false);
+  const handleCompleteTask = useCallback(
+    async (completed: boolean) => {
+      return await fetcher.submit(JSON.stringify({ id: task.id, completed }), {
+        action: "/app",
+        method: "PUT",
+        encType: "application/json",
+      });
+    },
+    [task.id, task.completed],
+  );
 
   return (
     <>
@@ -69,6 +80,17 @@ const TaskCard: React.FC<TaskCardProps> = ({
             aria-checked={task.completed}
             aria-label={`Mark task as ${task.completed ? "incomplete" : "complete"}`}
             aria-describedby="task-content"
+            onClick={async () => {
+              await handleCompleteTask(!task.completed);
+              toast.success("Your task has been marked complete!", {
+                action: {
+                  label: "Undo",
+                  onClick: () => {
+                    handleCompleteTask(false); // Pre-ES6 use handleCompleteTask.bind(null, false) to pass the argument to handler function.
+                  },
+                },
+              });
+            }}
           >
             <CheckIcon
               strokeWidth={4}
