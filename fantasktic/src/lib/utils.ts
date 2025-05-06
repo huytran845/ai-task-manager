@@ -78,7 +78,7 @@ This function creates an identifier using the current time in miliseconds (conve
 and then concatenated wtih a random number.
 The resulting base-36 string is sliced to remove unnecessary characters.
 
-@retruns {string} the unique identifying string */
+@returns {string} the unique identifying string */
 
 export function generateID() {
   return Math.random().toString(36).slice(8) + Date.now().toString(36);
@@ -94,4 +94,13 @@ export function getUserId(): string {
   }
 
   return clerkUserId;
+}
+
+/* Truncates a string with provided length and adds ellipsis */
+export function truncateString(str: string, maxLength: number): string {
+  if (str.length > maxLength) {
+    return `${str.slice(0, maxLength - 1)}...`;
+  }
+
+  return str;
 }

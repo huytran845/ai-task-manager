@@ -10,6 +10,7 @@ import TaskCreateButton from "@/components/TaskCreateButton";
 import TaskEmptyState from "@/components/TaskEmptyState";
 import TaskForm from "@/components/TaskForm";
 import TaskCard from "@/components/TaskCard";
+import TaskCardSkeleton from "@/components/TaskCardSkeleton";
 
 // Types
 import type { Models } from "appwrite";
@@ -50,10 +51,15 @@ const InboxPage = () => {
               />
             ),
           )}
+
+          {fetcher.state !== "idle" && <TaskCardSkeleton />}
+
           {!showTaskForm && (
             <TaskCreateButton onClick={() => setShowTaskForm(true)} />
           )}
-          {!showTaskForm && <TaskEmptyState type="inbox" />}
+
+          {!tasks.total && !showTaskForm && <TaskEmptyState type="inbox" />}
+
           {showTaskForm && (
             <TaskForm
               className="mt-1"
