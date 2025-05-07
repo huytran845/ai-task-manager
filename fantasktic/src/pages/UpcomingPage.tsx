@@ -18,7 +18,7 @@ import { CircleIcon } from "lucide-react";
 // Types
 import type { Models } from "appwrite";
 
-const InboxPage = () => {
+const UpcomingPage = () => {
   const [showTaskForm, setShowTaskForm] = useState(false);
 
   const iconSize = 16;
@@ -30,16 +30,16 @@ const InboxPage = () => {
   return (
     <>
       <Head
-        title="Your Inbox - Fantasktic To-Do List and Project Management App"
-        metaContent="The inbox that houses all the user's tasks that they've created."
+        title="Upcoming Tasks - Fantasktic To-Do List and Project Management App"
+        metaContent="Upcoming tasks that users have created will appear here."
       />
       <TopAppBar
-        title="Inbox"
+        title="Upcoming"
         taskCount={tasks.total}
       />
       <Page>
         <PageHeader>
-          <PageTitle>Inbox</PageTitle>
+          <PageTitle>Upcoming</PageTitle>
 
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
             <CircleIcon size={iconSize} /> {tasks.total} tasks
@@ -66,7 +66,7 @@ const InboxPage = () => {
             <TaskCreateButton onClick={() => setShowTaskForm(true)} />
           )}
 
-          {!tasks.total && !showTaskForm && <TaskEmptyState type="inbox" />}
+          {!tasks.total && !showTaskForm && <TaskEmptyState type="upcoming" />}
 
           {showTaskForm && (
             <TaskForm
@@ -88,4 +88,4 @@ const InboxPage = () => {
   );
 };
 
-export default InboxPage;
+export default UpcomingPage;

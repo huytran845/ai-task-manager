@@ -62,9 +62,9 @@ const emptyStates: Record<EmptyStateType, EmptyStateContent> = {
       width: 231,
       height: 260,
     },
-    title: "Good Job! You've done all these tasks!",
+    title: "Oh No! You haven't completed any tasks yet!",
     description:
-      "All tasks you’ve completed will appear here. Keep up the great work!",
+      "All tasks you’ve completed will appear here. Let's get some stuff done!",
   },
   project: {
     img: {

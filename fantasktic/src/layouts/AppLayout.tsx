@@ -1,5 +1,6 @@
 // Node Modules
-import { Outlet } from "react-router";
+import { Outlet, useNavigation } from "react-router";
+import { cn } from "@/lib/utils";
 
 // Components
 import { SidebarProvider } from "@/components/ui/sidebar";
@@ -8,13 +9,21 @@ import { Toaster } from "@/components/ui/sonner";
 import AppSideBar from "@/components/AppSideBar";
 
 const AppLayout = () => {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading" && !navigation.formData;
+
   return (
     <>
       <SidebarProvider>
         <TooltipProvider>
           <AppSideBar />
 
-          <main className="flex-1">
+          <main
+            className={cn(
+              "flex-1",
+              isLoading && "opacity-50 pointer-events-none",
+            )}
+          >
             <Outlet />
           </main>
         </TooltipProvider>

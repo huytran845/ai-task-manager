@@ -99,14 +99,26 @@ const TaskCard: React.FC<TaskCardProps> = ({
             aria-describedby="task-content"
             onClick={async () => {
               await handleCompleteTask(!task.completed);
-              toast.success("Your task has been marked complete!", {
-                action: {
-                  label: "Undo",
-                  onClick: () => {
-                    handleCompleteTask(false); // Pre-ES6 use handleCompleteTask.bind(null, false) to pass the argument to handler function.
+
+              if (!task.completed) {
+                toast.success("Your task has been marked complete!", {
+                  action: {
+                    label: "Undo",
+                    onClick: () => {
+                      handleCompleteTask(false); // Pre-ES6 use handleCompleteTask.bind(null, false) to pass the argument to handler function.
+                    },
                   },
-                },
-              });
+                });
+              } else {
+                toast.error("Your task was marked uncomplete!", {
+                  action: {
+                    label: "Undo",
+                    onClick: () => {
+                      handleCompleteTask(true);
+                    },
+                  },
+                });
+              }
             }}
           >
             <CheckIcon

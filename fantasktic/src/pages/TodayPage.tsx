@@ -1,6 +1,7 @@
 // Node Modules
 import { useState } from "react";
 import { useFetcher, useLoaderData } from "react-router";
+import { startOfToday } from "date-fns";
 
 // Components
 import Head from "@/components/Head";
@@ -18,7 +19,7 @@ import { CircleIcon } from "lucide-react";
 // Types
 import type { Models } from "appwrite";
 
-const InboxPage = () => {
+const TodayPage = () => {
   const [showTaskForm, setShowTaskForm] = useState(false);
 
   const iconSize = 16;
@@ -30,16 +31,16 @@ const InboxPage = () => {
   return (
     <>
       <Head
-        title="Your Inbox - Fantasktic To-Do List and Project Management App"
-        metaContent="The inbox that houses all the user's tasks that they've created."
+        title="Today's Tasks - Fantasktic To-Do List and Project Management App"
+        metaContent="The page that lists all tasks that are due today based on the user's timezone."
       />
       <TopAppBar
-        title="Inbox"
+        title="Today"
         taskCount={tasks.total}
       />
       <Page>
         <PageHeader>
-          <PageTitle>Inbox</PageTitle>
+          <PageTitle>Today</PageTitle>
 
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
             <CircleIcon size={iconSize} /> {tasks.total} tasks
@@ -66,12 +67,17 @@ const InboxPage = () => {
             <TaskCreateButton onClick={() => setShowTaskForm(true)} />
           )}
 
-          {!tasks.total && !showTaskForm && <TaskEmptyState type="inbox" />}
+          {!tasks.total && !showTaskForm && <TaskEmptyState type="today" />}
 
           {showTaskForm && (
             <TaskForm
               className="mt-1"
               mode="create"
+              defaultFormData={{
+                taskContent: "",
+                dueDate: startOfToday(),
+                projectId: null,
+              }}
               onCancel={() => setShowTaskForm(false)}
               onSubmit={(formData) => {
                 fetcher.submit(JSON.stringify(formData), {
@@ -88,4 +94,4 @@ const InboxPage = () => {
   );
 };
 
-export default InboxPage;
+export default TodayPage;

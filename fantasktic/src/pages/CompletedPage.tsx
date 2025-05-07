@@ -1,26 +1,21 @@
 // Node Modules
-import { useState } from "react";
 import { useFetcher, useLoaderData } from "react-router";
 
 // Components
 import Head from "@/components/Head";
 import TopAppBar from "@/components/TopAppBar";
 import { Page, PageHeader, PageTitle, PageList } from "@/components/Page";
-import TaskCreateButton from "@/components/TaskCreateButton";
 import TaskEmptyState from "@/components/TaskEmptyState";
-import TaskForm from "@/components/TaskForm";
 import TaskCard from "@/components/TaskCard";
 import TaskCardSkeleton from "@/components/TaskCardSkeleton";
 
 // Assets
-import { CircleIcon } from "lucide-react";
+import { CheckCircle2Icon } from "lucide-react";
 
 // Types
 import type { Models } from "appwrite";
 
-const InboxPage = () => {
-  const [showTaskForm, setShowTaskForm] = useState(false);
-
+const CompletedPage = () => {
   const iconSize = 16;
   const fetcher = useFetcher();
   const { tasks } = useLoaderData<{
@@ -30,19 +25,19 @@ const InboxPage = () => {
   return (
     <>
       <Head
-        title="Your Inbox - Fantasktic To-Do List and Project Management App"
-        metaContent="The inbox that houses all the user's tasks that they've created."
+        title="Completed Tasks - Fantasktic To-Do List and Project Management App"
+        metaContent="This page lists all tasks that have been marked completed by the user."
       />
       <TopAppBar
-        title="Inbox"
+        title="Completed"
         taskCount={tasks.total}
       />
       <Page>
         <PageHeader>
-          <PageTitle>Inbox</PageTitle>
+          <PageTitle>Completed</PageTitle>
 
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <CircleIcon size={iconSize} /> {tasks.total} tasks
+            <CheckCircle2Icon size={iconSize} /> {tasks.total} tasks
           </div>
         </PageHeader>
 
@@ -62,30 +57,11 @@ const InboxPage = () => {
 
           {fetcher.state !== "idle" && <TaskCardSkeleton />}
 
-          {!showTaskForm && (
-            <TaskCreateButton onClick={() => setShowTaskForm(true)} />
-          )}
-
-          {!tasks.total && !showTaskForm && <TaskEmptyState type="inbox" />}
-
-          {showTaskForm && (
-            <TaskForm
-              className="mt-1"
-              mode="create"
-              onCancel={() => setShowTaskForm(false)}
-              onSubmit={(formData) => {
-                fetcher.submit(JSON.stringify(formData), {
-                  action: "/app",
-                  method: "POST",
-                  encType: "application/json",
-                });
-              }}
-            />
-          )}
+          {!tasks.total && <TaskEmptyState type="completed" />}
         </PageList>
       </Page>
     </>
   );
 };
 
-export default InboxPage;
+export default CompletedPage;
