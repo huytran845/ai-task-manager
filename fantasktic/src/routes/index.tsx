@@ -22,6 +22,7 @@ import RootErrorPage from "@/pages/RootErrorPage";
 
 // Actions
 import appAction from "@/routes/actions/appAction";
+import projectAction from "@/routes/actions/projectAction";
 
 // Loaders
 import inboxTaskLoader from "@/routes/loaders/inboxLoader";
@@ -71,6 +72,10 @@ const appRouteChildren: RouteObject[] = [
     path: "completed",
     element: <CompletedPage />,
     loader: completedTaskLoader,
+  },
+  {
+    path: "projects",
+    action: projectAction,
   },
 ];
 

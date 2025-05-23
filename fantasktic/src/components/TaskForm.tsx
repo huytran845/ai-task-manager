@@ -201,6 +201,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
           <PopoverContent
             className="w-[240px] p-0"
             align="start"
+            side="bottom"
           >
             <Command>
               <CommandInput placeholder="Search for your project..." />

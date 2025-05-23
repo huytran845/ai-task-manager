@@ -29,6 +29,7 @@ import {
 import { UserButton } from "@clerk/clerk-react";
 import Logo from "@/components/Logo";
 import TaskFormDialog from "@/components/TaskFormDialog";
+import ProjectFormDialog from "@/components/ProjectFormDialog";
 
 // Assets
 import { CirclePlusIcon, PlusIcon, ChevronRightIcon } from "lucide-react";
@@ -111,11 +112,13 @@ const AppSidebar = () => {
               delayDuration={400}
               disableHoverableContent
             >
-              <TooltipTrigger asChild>
-                <SidebarGroupAction aria-label="Add Project">
-                  <PlusIcon />
-                </SidebarGroupAction>
-              </TooltipTrigger>
+              <ProjectFormDialog method="POST">
+                <TooltipTrigger asChild>
+                  <SidebarGroupAction aria-label="Add Project">
+                    <PlusIcon />
+                  </SidebarGroupAction>
+                </TooltipTrigger>
+              </ProjectFormDialog>
 
               <TooltipContent side="right">Add Project</TooltipContent>
             </Tooltip>

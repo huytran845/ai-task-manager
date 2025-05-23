@@ -2,8 +2,8 @@
 type Project = {
   id: string | null;
   name: string;
-  color_name: string;
-  color_hex: string;
+  colorName: string;
+  colorHex: string;
 };
 
 type ProjectForm = {
