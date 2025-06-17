@@ -17,6 +17,7 @@ import TodayPage from "@/pages/TodayPage";
 import UpcomingPage from "@/pages/UpcomingPage";
 import CompletedPage from "@/pages/CompletedPage";
 import ProjectsPage from "@/pages/ProjectsPage";
+import ProjectDetailsPage from "@/pages/ProjectDetailsPage";
 
 // Error Pages
 import RootErrorPage from "@/pages/RootErrorPage";
@@ -31,6 +32,7 @@ import todayTaskLoader from "@/routes/loaders/todayLoader";
 import upcomingTaskLoader from "@/routes/loaders/upcomingLoader";
 import completedTaskLoader from "@/routes/loaders/completedLoader";
 import projectsLoader from "@/routes/loaders/projectsLoader";
+import projectDetailsLoader from "@/routes/loaders/projectDetailsLoader";
 
 // Types
 import type { RouteObject } from "react-router";
@@ -80,6 +82,11 @@ const appRouteChildren: RouteObject[] = [
     element: <ProjectsPage />,
     action: projectAction,
     loader: projectsLoader,
+  },
+  {
+    path: "projects/:projectId",
+    element: <ProjectDetailsPage />,
+    loader: projectDetailsLoader,
   },
 ];
 

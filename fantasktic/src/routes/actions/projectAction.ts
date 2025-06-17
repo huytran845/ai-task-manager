@@ -76,6 +76,27 @@ const createProject = async (data: ProjectForm) => {
   return redirect(`/app/projects/${project?.$id}`);
 };
 
+const updateProject = async (data: Project) => {
+  const documentId = data.id;
+
+  if (!documentId) throw new Error("Project id not found.");
+
+  try {
+    return await databases.updateDocument(
+      APPWRITE_DATABASE_ID,
+      "projects",
+      documentId,
+      {
+        name: data.name,
+        colorName: data.colorName,
+        colorHex: data.colorHex,
+      },
+    );
+  } catch (updateProjectError) {
+    console.log("Error updating project: ", updateProjectError);
+  }
+};
+
 const deleteProject = async (data: Project) => {
   const documentId = data.id;
 
@@ -100,11 +121,15 @@ const projectAction: ActionFunction = async ({ request }) => {
     return await createProject(data);
   }
 
+  if (method === "PUT") {
+    return await updateProject(data);
+  }
+
   if (method === "DELETE") {
     return await deleteProject(data);
   }
 
-  return null;
+  throw new Error("Invalid Method!");
 };
 
 export default projectAction;

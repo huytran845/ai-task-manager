@@ -49,7 +49,7 @@ const ProjectDeleteButton: React.FC<ProjectDeleteButtonProps> = ({
         success: () => {
           return `Project ${truncateString(defaultFormData.name, 32)} has been deleted!`;
         },
-        error: "Error occurred during project fetch!",
+        error: "Error fetching project for deletion!",
         duration: 4000,
       });
     } catch (projectDeleteError) {

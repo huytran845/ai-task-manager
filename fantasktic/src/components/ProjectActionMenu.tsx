@@ -26,7 +26,7 @@ const ProjectActionMenu: React.FC<ProjectActionMenuProps> = ({
   ...props
 }) => {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
 
       <DropdownMenuContent {...props}>

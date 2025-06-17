@@ -117,6 +117,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
         <div>
           <Label htmlFor="projectName">Name</Label>
           <Input
+            autoFocus
             type="text"
             id="projectName"
             className="mt-3 mb-1"

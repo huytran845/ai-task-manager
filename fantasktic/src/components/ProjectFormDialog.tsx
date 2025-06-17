@@ -38,7 +38,6 @@ const ProjectFormDialog: React.FC<ProjectFormDialogProps> = ({
     <Dialog
       open={open}
       onOpenChange={setOpen}
-      modal
     >
       <DialogTitle className="hidden">Create your project!</DialogTitle>
       <DialogTrigger asChild>{children}</DialogTrigger>
