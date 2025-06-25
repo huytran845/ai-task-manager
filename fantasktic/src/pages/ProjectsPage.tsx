@@ -57,7 +57,7 @@ const ProjectsPage = () => {
     <>
       <Head
         title="My Projects - Fantasktic To-Do List and Project Management App"
-        metaContent="The projects page houses all the user created projects along with its associated tasks."
+        metaContent="The projects page houses all the user created projects in one easy to view spot."
       />
 
       <TopAppBar title="My Projects" />

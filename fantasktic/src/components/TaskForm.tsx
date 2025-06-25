@@ -31,6 +31,9 @@ import {
 } from "@/components/ui/command";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+// Hooks
+import { useProjects } from "@/contexts/ProjectContext";
+
 // Assets
 import {
   CalendarIcon,
@@ -39,11 +42,13 @@ import {
   ChevronDownIcon,
   HashIcon,
   SendHorizonalIcon,
+  CheckIcon,
 } from "lucide-react";
 
 // Types
 import type { ClassValue } from "clsx";
 import type { TaskForm } from "@/types";
+import { Models } from "appwrite";
 
 type TaskFormProps = {
   defaultFormData?: TaskForm;
@@ -66,6 +71,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
   onCancel,
   onSubmit,
 }) => {
+  const projects = useProjects();
+
   const [dateOpen, setDateOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -77,6 +84,17 @@ const TaskForm: React.FC<TaskFormProps> = ({
   const [projectColorHex, setProjectColorHex] = useState("");
 
   const [formData, setFormData] = useState(defaultFormData);
+
+  useEffect(() => {
+    if (projectId) {
+      const { name, colorHex } = projects?.documents.find(
+        ({ $id }) => projectId === $id,
+      ) as Models.Document;
+
+      setProjectName(name);
+      setProjectColorHex(colorHex);
+    }
+  }, [projects, projectId]);
 
   useEffect(() => {
     setFormData((prevFormData) => ({
@@ -128,7 +146,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <div className="ring-1 ring-border rounded-md max-w-max">
           <Popover
             modal
-            open={dateOpen} // Note that this makes the modal only close and open by clicking on the name, if the x icon does nothing else revert it back
+            open={dateOpen}
+            onOpenChange={setDateOpen}
           >
             <PopoverTrigger asChild>
               <Button
@@ -185,6 +204,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <Popover
           modal
           open={searchOpen}
+          onOpenChange={setSearchOpen}
         >
           <PopoverTrigger asChild>
             <Button
@@ -194,7 +214,15 @@ const TaskForm: React.FC<TaskFormProps> = ({
               onClick={() => setSearchOpen((prev) => !prev)}
               className="max-w-max"
             >
-              <InboxIcon /> Inbox <ChevronDownIcon />
+              {projectName ? (
+                <HashIcon color={projectColorHex} />
+              ) : (
+                <InboxIcon />
+              )}
+
+              <span className="truncate">{projectName || "Inbox"}</span>
+
+              <ChevronDownIcon />
             </Button>
           </PopoverTrigger>
 
@@ -211,53 +239,30 @@ const TaskForm: React.FC<TaskFormProps> = ({
                   <CommandEmpty>No projects found.</CommandEmpty>
 
                   <CommandGroup>
-                    <CommandItem>
-                      <HashIcon /> Project 1
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 2
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 3
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 4
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 5
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 6
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 7
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 8
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 9
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 10
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 11
-                    </CommandItem>
-
-                    <CommandItem>
-                      <HashIcon /> Project 12
-                    </CommandItem>
+                    {projects?.documents.map(({ $id, name, colorHex }) => (
+                      <CommandItem
+                        key={$id}
+                        onSelect={(selectedValue) => {
+                          setProjectName(
+                            selectedValue === projectName ? "" : name,
+                          );
+                          setProjectId(
+                            selectedValue === projectName ? null : $id,
+                          );
+                          setProjectColorHex(
+                            selectedValue === projectName
+                              ? undefined
+                              : colorHex,
+                          );
+                          setSearchOpen(false);
+                        }}
+                      >
+                        <HashIcon color={colorHex} /> {name}
+                        {projectName === name && (
+                          <CheckIcon className="ms-auto" />
+                        )}
+                      </CommandItem>
+                    ))}
                   </CommandGroup>
                 </ScrollArea>
               </CommandList>

@@ -33,6 +33,7 @@ import upcomingTaskLoader from "@/routes/loaders/upcomingLoader";
 import completedTaskLoader from "@/routes/loaders/completedLoader";
 import projectsLoader from "@/routes/loaders/projectsLoader";
 import projectDetailsLoader from "@/routes/loaders/projectDetailsLoader";
+import appLoader from "@/routes/loaders/appLoader";
 
 // Types
 import type { RouteObject } from "react-router";
@@ -102,6 +103,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: appRouteChildren,
     action: appAction,
+    loader: appLoader,
   },
 ]);
 

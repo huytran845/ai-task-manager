@@ -34,7 +34,14 @@ const ProjectDeleteButton: React.FC<ProjectDeleteButtonProps> = ({
   defaultFormData,
 }) => {
   const fetcher = useFetcher();
+  const location = useLocation();
+  const navigate = useNavigate();
   const handleProjectDelete = useCallback(async () => {
+    // Navigate to inbox page if deleting project from project details page
+    if (location.pathname === `/app/projects/${defaultFormData.id}`) {
+      navigate("/app/inbox");
+    }
+
     try {
       const deletePromise = async () => {
         await fetcher.submit(defaultFormData, {
