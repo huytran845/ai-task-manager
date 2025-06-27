@@ -54,7 +54,10 @@ const ProjectDeleteButton: React.FC<ProjectDeleteButtonProps> = ({
       toast.promise(deletePromise, {
         loading: "Deleting Project...",
         success: () => {
-          return `Project ${truncateString(defaultFormData.name, 32)} has been deleted!`;
+          return {
+            message: "Project deleted",
+            description: `Project ${truncateString(defaultFormData.name, 32)} has been successfully deleted!`,
+          };
         },
         error: "Error fetching project for deletion!",
         duration: 4000,

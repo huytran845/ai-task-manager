@@ -14,9 +14,9 @@ import { EditIcon } from "lucide-react";
 
 // Types
 import type { Project } from "@/types";
-import type { DropdownMenuProps } from "@radix-ui/react-dropdown-menu";
+import type { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
 
-interface ProjectActionMenuProps extends DropdownMenuProps {
+interface ProjectActionMenuProps extends DropdownMenuContentProps {
   defaultFormData: Project;
 }
 

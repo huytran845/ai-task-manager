@@ -46,12 +46,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         >
           <MoreHorizontalIcon />
         </Button>
-
-        <Link
-          to={`/app/projects/${project.$id}`}
-          className="absolute inset-0 z-10"
-        />
       </ProjectActionMenu>
+      <Link
+        to={`/app/projects/${project.$id}`}
+        className="absolute inset-0 z-10"
+      />
     </div>
   );
 };

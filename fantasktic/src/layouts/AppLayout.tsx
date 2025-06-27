@@ -34,7 +34,16 @@ const AppLayout = () => {
         </TooltipProvider>
       </SidebarProvider>
 
-      <Toaster position="top-center" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          classNames: {
+            toast: "!bg-primary/85",
+            title: "text-lg",
+            description: "text-base",
+          },
+        }}
+      />
     </ProjectProvider>
   );
 };

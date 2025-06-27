@@ -66,7 +66,10 @@ const ProjectFormDialog: React.FC<ProjectFormDialogProps> = ({
             toast.promise(fetchPromise, {
               loading: `${method === "POST" ? "Creating" : "Updating"} Project...`,
               success: (data: ProjectForm) => {
-                return `Project ${truncateString(data.name, 32)} ${data.aiTaskGen ? "and its generated tasks " : ""} has been ${method === "POST" ? "created" : "updated"}!`;
+                return {
+                  message: `Project ${method === "POST" ? "created" : "updated"}`,
+                  description: `Project ${truncateString(data.name, 32)} ${data.aiTaskGen ? "and its generated tasks " : ""} has been successfully ${method === "POST" ? "created" : "updated"}!`,
+                };
               },
               error: "Error occurred during project fetch!",
               duration: 4000,
