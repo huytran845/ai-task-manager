@@ -1,5 +1,5 @@
 // Node Modules
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useLoaderData } from "react-router";
 
 // Components
 import {
@@ -50,9 +50,13 @@ import { useProjects } from "@/contexts/ProjectContext";
 // Constants
 import { SIDEBAR_LINKS } from "@/constants";
 
+// Types
+import type { AppLoaderData } from "@/routes/loaders/appLoader";
+
 const AppSidebar = () => {
   const location = useLocation();
   const projects = useProjects();
+  const { taskCounts } = useLoaderData() as AppLoaderData;
   const { isMobile, setOpenMobile } = useSidebar();
 
   return (
@@ -95,7 +99,23 @@ const AppSidebar = () => {
                     </Link>
                   </SidebarMenuButton>
 
-                  <SidebarMenuBadge>0</SidebarMenuBadge>
+                  {/* Show task counts for respective menu items */}
+                  {link.href === "/app/inbox" && (
+                    <SidebarMenuBadge>{taskCounts.inboxTasks}</SidebarMenuBadge>
+                  )}
+                  {link.href === "/app/today" && (
+                    <SidebarMenuBadge>{taskCounts.todayTasks}</SidebarMenuBadge>
+                  )}
+                  {link.href === "/app/upcoming" && (
+                    <SidebarMenuBadge>
+                      {taskCounts.upcomingTasks}
+                    </SidebarMenuBadge>
+                  )}
+                  {link.href === "/app/completed" && (
+                    <SidebarMenuBadge>
+                      {taskCounts.completedTasks}
+                    </SidebarMenuBadge>
+                  )}
                 </SidebarMenuItem>
               ))}
               <SidebarMenuItem></SidebarMenuItem>

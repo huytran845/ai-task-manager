@@ -21,6 +21,7 @@ import ProjectDetailsPage from "@/pages/ProjectDetailsPage";
 
 // Error Pages
 import RootErrorPage from "@/pages/RootErrorPage";
+import ProjectErrorPage from "@/pages/ProjectErrorPage";
 
 // Actions
 import appAction from "@/routes/actions/appAction";
@@ -88,6 +89,7 @@ const appRouteChildren: RouteObject[] = [
     path: "projects/:projectId",
     element: <ProjectDetailsPage />,
     loader: projectDetailsLoader,
+    errorElement: <ProjectErrorPage />,
   },
 ];
 

@@ -162,7 +162,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
                       {task.projectId?.name || "Inbox"}
                     </div>
                     {task.projectId ? (
-                      <HashIcon size={iconSize} />
+                      <HashIcon
+                        size={iconSize}
+                        color={task.projectId.colorHex}
+                      />
                     ) : (
                       <InboxIcon
                         size={iconSize}
