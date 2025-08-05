@@ -20,6 +20,7 @@ import { MoreHorizontalIcon } from "lucide-react";
 // Types
 import type { Models } from "appwrite";
 
+// The ProjectDetailsPage is the main page of a project, listing the project name and all of its associated tasks.
 const ProjectDetailsPage = () => {
   const fetcher = useFetcher();
   const { project } = useLoaderData<{ project: Models.Document }>();
@@ -30,7 +31,7 @@ const ProjectDetailsPage = () => {
     (taskInstance: Models.Document) => !taskInstance.completed,
   ) as Models.Document[];
 
-  // Sort tasks by due dates
+  // Order tasks chronologically by their dueDate, tasks with the earliest dueDates appear first.
   projectTasks.sort((a, b) => {
     return a.dueDate - b.dueDate;
   });
@@ -84,12 +85,14 @@ const ProjectDetailsPage = () => {
             />
           ))}
 
+          {/* Display skeleton for user to represent loading when fetching data. */}
           {fetcher.state !== "idle" && <TaskCardSkeleton />}
 
           {!showTaskForm && (
             <TaskCreateButton onClick={() => setShowTaskForm(true)} />
           )}
 
+          {/* If no tasks, and form isn't open show empty state. */}
           {!projectTasks.length && !showTaskForm && (
             <TaskEmptyState type="project" />
           )}

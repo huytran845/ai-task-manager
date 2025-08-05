@@ -16,6 +16,7 @@ type ProjectSearchFieldProps = {
   searchingState: SearchState;
 };
 
+// ProjectSearchfield Component is a search field that accepts a handleChange function for when the user types in the Input component, and a searchingState to properly telegraph the current state of the search.
 const ProjectSearchField: React.FC<ProjectSearchFieldProps> = ({
   handleChange,
   searchingState,

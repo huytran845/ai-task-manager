@@ -39,6 +39,7 @@ import appLoader from "@/routes/loaders/appLoader";
 // Types
 import type { RouteObject } from "react-router";
 
+// The rootRouteChildren are the primary pages for users to create/login to their accounts.
 const rootRouteChildren: RouteObject[] = [
   {
     index: true,
@@ -58,6 +59,7 @@ const rootRouteChildren: RouteObject[] = [
   },
 ];
 
+// The appRouteChildren are the main pages of the application once the user successfully signs into their account.
 const appRouteChildren: RouteObject[] = [
   {
     path: "inbox",

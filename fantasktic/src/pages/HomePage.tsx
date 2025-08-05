@@ -8,6 +8,7 @@ import Head from "@/components/Head";
 // Assets
 import { heroBannerLg, heroBannerSm } from "@/assets";
 
+// The HomePage is the primary landing page that users start on when first visiting the website.
 const HomePage = () => {
   return (
     <>

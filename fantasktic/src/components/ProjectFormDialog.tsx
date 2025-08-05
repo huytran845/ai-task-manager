@@ -25,13 +25,14 @@ type ProjectFormDialogProps = {
   method: "POST" | "PUT";
 };
 
+// The ProejectFormDialog Component houses the projectForm component and puts it into a Dialog component.
+// It's a dialog that will setup the promise to properly submit the data and notify the user with a toast upon completion or error.
 const ProjectFormDialog: React.FC<ProjectFormDialogProps> = ({
   defaultFormData,
   children,
   method,
 }) => {
   const fetcher = useFetcher();
-
   const [open, setOpen] = useState<boolean>(false);
 
   return (

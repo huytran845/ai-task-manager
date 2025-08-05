@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+// Exporting cn function that allows output of filtered Tailwind classNames.
+// Accepts conditionals, strings, etc. and cleans out the inputs.
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -17,18 +19,19 @@ import {
 } from "date-fns";
 import { redirect } from "react-router";
 
+// Standard function that accepts a string and converts it to title case.
 export function toTitleCase(capitalize: string) {
-  return capitalize[0].toUpperCase() + capitalize.slice(1);
+  return capitalize[0].toUpperCase() + capitalize.slice(1); // Capitalizes the first letter and appends it to provided word without its 1st letter.
 }
 
-// Converts date string into a custom format (Ex: "Today", "Tommorow", "dd MMM", etc.)
+// FormatCustomDate converts date, string, or number into a custom format. (Ex: "Today", "Tommorow", "dd MMM", etc.)
 export function formatCustomDate(date: string | number | Date) {
   const today = new Date();
 
-  // Get relative day string
+  // Takes the inserted date and returns the day relative to today's date.
   const relativeDay = toTitleCase(formatRelative(date, today).split(" at ")[0]);
 
-  // Relative keywords to check
+  // Relative keywords to check.
   const relativeDays = [
     "Today",
     "Tomorrow",
@@ -53,7 +56,10 @@ export function formatCustomDate(date: string | number | Date) {
   }
 }
 
-// Returns color class based on due date of task
+// Returns color class based on due date of task.
+// Red if dueDate is before today.
+// Yellow if dueDate is tomorrow.
+// Green if dueDate is today.
 export function getTaskDateColor(
   dueDate: Date | null,
   completed?: boolean,
@@ -73,13 +79,12 @@ export function getTaskDateColor(
   }
 }
 
-/* Generates a unique ID by combining current time and a random number
+/* Generates a unique ID by combining current time and a random number.
 This function creates an identifier using the current time in miliseconds (converted to a base-36 string)
 and then concatenated wtih a random number.
 The resulting base-36 string is sliced to remove unnecessary characters.
 
 @returns {string} the unique identifying string */
-
 export function generateID() {
   return Math.random().toString(36).slice(8) + Date.now().toString(36);
 }
@@ -96,7 +101,7 @@ export function getUserId(): string {
   return clerkUserId;
 }
 
-/* Truncates a string with provided length and adds ellipsis */
+/* Truncates a string with provided length and adds ellipsis. */
 export function truncateString(str: string, maxLength: number): string {
   if (str.length > maxLength) {
     return `${str.slice(0, maxLength - 1)}...`;

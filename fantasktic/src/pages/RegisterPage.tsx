@@ -4,6 +4,7 @@ import { SignUp } from "@clerk/clerk-react";
 // Components
 import Head from "@/components/Head";
 
+// RegisterPage for users to register an account with the app, utilizing Clerk API.
 const RegisterPage = () => {
   return (
     <>

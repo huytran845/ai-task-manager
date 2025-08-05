@@ -16,6 +16,7 @@ type ProjectCardProps = {
   project: Models.Document;
 };
 
+// The ProjectCard Component houses the details of a project, and takes in a Models.Document object from appwrite which houses all the project attributes.
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <div className="group/card relative h-14 flex items-center gap-3 px-2 rounded-lg hover:bg-secondary">

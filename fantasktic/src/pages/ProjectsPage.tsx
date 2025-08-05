@@ -26,6 +26,7 @@ type DataType = {
   projects: Models.DocumentList<Models.Document>;
 };
 
+// The ProjectsPage lists all the projects the user created, allowing users to edit or delete any projects with ease.
 const ProjectsPage = () => {
   const fetcher = useFetcher();
   const fetcherData = fetcher.data as DataType;
@@ -33,15 +34,20 @@ const ProjectsPage = () => {
   const { projects } = fetcherData || loaderData;
   const [searchingState, setSearchingState] = useState<SearchState>("idle");
 
+  // Reference for storing the Timeout for debouncing.
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  // handleProjectSearch is a memoize function utilized for debouncing the search field.
+  // Debouncing is to limit how often the function will run to avoid causing too many calls for searching.
   const handleProjectSearch = useCallback(
     (searchEvent: React.ChangeEvent<HTMLInputElement>) => {
+      // Clear out any existing submissions to reset the wait window on new keystroke.
       if (searchTimeout.current) {
         clearTimeout(searchTimeout.current);
       }
       const submitTarget = searchEvent.currentTarget.form;
 
+      // Setup a delayed submission after getting user input, that waits for SEARCH_TIMEOUT_DELAY (500 ms) before attempting to submit.
       searchTimeout.current = setTimeout(async () => {
         setSearchingState("searching");
         await fetcher.submit(submitTarget);
@@ -79,6 +85,8 @@ const ProjectsPage = () => {
             </ProjectFormDialog>
           </div>
 
+          {/* Wrap the fetcher.Form component for when fetcher.submit is called in the handleProjectSearch.
+          Method get is utilized to fetch the requested data, it's actually calling the loader instead of the action file since it's retriving data instead of modifying it. */}
           <fetcher.Form
             method="get"
             action="/app/projects"
@@ -95,6 +103,7 @@ const ProjectsPage = () => {
             <div className="text-sm">{projects.total} Projects</div>
           </div>
 
+          {/* Grays out project cards for ui experience when a search is being fetched. */}
           <div className={cn(searchingState === "searching" && "opacity-25")}>
             {projects.documents.map((project) => (
               <ProjectCard

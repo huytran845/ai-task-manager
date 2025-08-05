@@ -5,6 +5,7 @@ import TopAppBar from "@/components/TopAppBar";
 // Assets
 import { pageNotFound } from "@/assets";
 
+// ProjectErrorPage is displayed when user navigates to a project id that doesn't exist.
 const ProjectErrorPage = () => {
   return (
     <>

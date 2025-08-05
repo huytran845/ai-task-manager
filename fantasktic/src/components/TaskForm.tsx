@@ -64,6 +64,7 @@ const DEFAULT_FORM_DATA: TaskForm = {
   projectId: null,
 };
 
+// The TaskForm component displays the form for creating the user's task, depending on where it's called it will either have data for creating a new task or old task data for editing a task.
 const TaskForm: React.FC<TaskFormProps> = ({
   defaultFormData = DEFAULT_FORM_DATA,
   className,
@@ -85,6 +86,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
   const [formData, setFormData] = useState(defaultFormData);
 
+  // This useEffect updates the displayable projects in the form so users can assign tasks to a project.
   useEffect(() => {
     if (projectId) {
       const { name, colorHex } = projects?.documents.find(
@@ -96,6 +98,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     }
   }, [projects, projectId]);
 
+  // This useEffect syncs form data when variables on the form are updated.
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -105,6 +108,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     }));
   }, [taskContent, dueDate, projectId]);
 
+  // This useEffect uses the chrono-node library to find all instances of dates mentioned, setting the dueDate as the last mentioned date.
   useEffect(() => {
     const chronoParsed = chrono.parse(taskContent);
 
@@ -114,12 +118,13 @@ const TaskForm: React.FC<TaskFormProps> = ({
     }
   }, [taskContent]);
 
-  const handleSumbit = useCallback(() => {
-    if (!taskContent) return;
+  // The handleSubmit function to be passed into a button component, or called to submit the formData.
+  const handleSubmit = useCallback(() => {
+    if (!taskContent) return; // Quit out of the function if taskContent is empty.
 
-    if (onSubmit) onSubmit(formData);
+    if (onSubmit) onSubmit(formData); // Call the provided onSubmit callback with formData.
 
-    setTaskContent("");
+    setTaskContent(""); // Reset values after submitting the data.
     setDueDate(null);
   }, [taskContent, onSubmit, formData]);
 
@@ -138,7 +143,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
             if (keyEvent.key === "Enter") {
               keyEvent.preventDefault();
 
-              handleSumbit();
+              handleSubmit();
             }
           }} // Prevents user from using next line, and binds it to submit instead.
         />
@@ -165,8 +170,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                disabled={{ before: new Date() }}
-                selected={dueDate ? new Date(dueDate) : undefined}
+                disabled={{ before: new Date() }} // Disable all dates before the today's date.
+                selected={dueDate ? new Date(dueDate) : undefined} // Highlights selected dueDate if it exists.
                 initialFocus
                 onSelect={(selected) => {
                   setDueDate(selected || null);
@@ -176,6 +181,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
             </PopoverContent>
           </Popover>
 
+          {/* Button to delete dueDate after a date is selected. */}
           {dueDate && (
             <Tooltip
               delayDuration={400}
@@ -281,7 +287,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
           <Button
             disabled={!taskContent}
-            onClick={() => handleSumbit()}
+            onClick={() => handleSubmit()}
           >
             <span className="max-md:hidden">
               {mode === "create" ? "Add Task" : "Save Changes"}

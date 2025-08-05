@@ -9,7 +9,7 @@ import {
 import React from "react";
 
 // Types
-type EmptyStateType = "today" | "inbox" | "upcoming" | "completed" | "project";
+type EmptyStateType = "today" | "inbox" | "upcoming" | "completed" | "project"; // All the pages where the emptyState would be used.
 
 interface TaskEmptyStateProps {
   type?: EmptyStateType;
@@ -25,6 +25,7 @@ interface EmptyStateContent {
   description: string;
 }
 
+// EmptyStates is an object that contains a record with the properties of emptyStateType and contain the information from emptyStateContent.
 const emptyStates: Record<EmptyStateType, EmptyStateContent> = {
   today: {
     img: {
@@ -78,6 +79,7 @@ const emptyStates: Record<EmptyStateType, EmptyStateContent> = {
   },
 };
 
+// The TaskEmptyState component will take in a type from where the component is called, and display the proper image for the respective page when there are no tasks to display.
 const TaskEmptyState: React.FC<TaskEmptyStateProps> = ({ type = "today" }) => {
   const { img, title, description } = emptyStates[type];
 

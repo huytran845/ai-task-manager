@@ -19,6 +19,7 @@ import { CircleIcon } from "lucide-react";
 // Types
 import type { Models } from "appwrite";
 
+// The TodayPage contains all the tasks that are due today.
 const TodayPage = () => {
   const [showTaskForm, setShowTaskForm] = useState(false);
 
@@ -69,6 +70,7 @@ const TodayPage = () => {
 
           {!tasks.total && !showTaskForm && <TaskEmptyState type="today" />}
 
+          {/* The Taskform that is displayed on this page will post new tasks, but with the dueDate listed as today. */}
           {showTaskForm && (
             <TaskForm
               className="mt-1"

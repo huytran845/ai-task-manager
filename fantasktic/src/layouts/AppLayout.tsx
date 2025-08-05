@@ -12,10 +12,11 @@ import { ProjectProvider } from "@/contexts/ProjectContext";
 // Types
 import { AppLoaderData } from "@/routes/loaders/appLoader";
 
+// The main layout for the main application.
 const AppLayout = () => {
   const navigation = useNavigation();
   const { projects } = useLoaderData<AppLoaderData>();
-  const isLoading = navigation.state === "loading" && !navigation.formData;
+  const isLoading = navigation.state === "loading" && !navigation.formData; // Sets isLoading state when user navigates pages, but not when it's from form submission.
 
   return (
     <ProjectProvider projects={projects}>

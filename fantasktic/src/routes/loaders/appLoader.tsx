@@ -25,6 +25,7 @@ export type AppLoaderData = {
   taskCounts: TaskCounts;
 };
 
+// GetProjects queries the database for all projects that belong to the user, with a max limit of 100 projects.
 const getProjects = async () => {
   try {
     return await databases.listDocuments(APPWRITE_DATABASE_ID, "projects", [
@@ -39,8 +40,11 @@ const getProjects = async () => {
   }
 };
 
+// The getTaskCounts function retrieves the number of entries per page on the application for the user.
+// Each page of the application gets its own unique query parameters to fetch the correct number for the respective page.
 const getTaskCounts = async () => {
   const taskCounts: TaskCounts = {
+    // Create a taskCounts object to store all variables for desired pages.
     inboxTasks: 0,
     todayTasks: 0,
     upcomingTasks: 0,
@@ -131,7 +135,7 @@ const getTaskCounts = async () => {
 const appLoader: LoaderFunction = async () => {
   const userId = getUserId();
 
-  if (!userId) return redirect("/login");
+  if (!userId) return redirect("/login"); // Checks if user is correct on each data request.
 
   const projects = await getProjects();
   const taskCounts = await getTaskCounts();

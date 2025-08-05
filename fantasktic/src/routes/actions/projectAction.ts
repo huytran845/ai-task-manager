@@ -19,9 +19,10 @@ type aiGenTask = {
   dueDate: Date | null;
 };
 
+// CreateProject will create a project based on provided values and whether the user opted for ai generation or not.
 const createProject = async (data: ProjectForm) => {
   let project: Models.Document | null = null;
-  let aiGeneratedTasks: aiGenTask[] = [];
+  let aiGeneratedTasks: aiGenTask[] = []; // Create an array to house AI's predefined schema data return.
 
   const aiTaskGen = data.aiTaskGen;
   const taskGenPrompt = data.taskGenPrompt;
@@ -42,7 +43,7 @@ const createProject = async (data: ProjectForm) => {
     console.log("Error creating project: ", err);
   }
 
-  // Generate tasks using AI if option was selected
+  // Generate and store tasks using AI if option was selected.
   if (aiTaskGen) {
     try {
       aiGeneratedTasks = JSON.parse((await getAiResponse(taskGenPrompt)) || "");
@@ -51,7 +52,7 @@ const createProject = async (data: ProjectForm) => {
     }
   }
 
-  // If any tasks were generated, map each to a promise to store the task in the database
+  // If any tasks were generated, map each to a promise to store the task in the database.
   if (aiGeneratedTasks.length) {
     const promises = aiGeneratedTasks.map((task) => {
       return databases.createDocument(
@@ -73,9 +74,10 @@ const createProject = async (data: ProjectForm) => {
     }
   }
 
-  return redirect(`/app/projects/${project?.$id}`);
+  return redirect(`/app/projects/${project?.$id}`); // Redirect user to the new project's information page.
 };
 
+// UpdateProject receives new project data to update in the database changing either name or color of the project.
 const updateProject = async (data: Project) => {
   const documentId = data.id;
 
@@ -97,6 +99,7 @@ const updateProject = async (data: Project) => {
   }
 };
 
+// The deleteProject function takes the projectID and attempts to delete the project and all its associated information.
 const deleteProject = async (data: Project) => {
   const documentId = data.id;
 

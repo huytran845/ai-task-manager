@@ -10,13 +10,14 @@ import Footer from "@/components/Footer";
 import { pageNotFound } from "@/assets";
 import { HomeIcon, InboxIcon } from "lucide-react";
 
+// RootErrorPage is the main page when the user navigates to any url that doesn't exist on the website or gets a loading error.
 const RootErrorPage = () => {
   const error = useRouteError();
 
   return (
     <div className="min-h-[100dvh] flex flex-col">
       <Header />
-
+      {/* The page dynamically changes based on whether the user navigated to a nonexistent page or got a load error. */}
       <div className="grow container flex flex-col justify-center items-center pt-32 pb-12">
         <h1 className="text-2xl font-semibold text-center sm:text-4xl">
           {isRouteErrorResponse(error)
@@ -56,7 +57,6 @@ const RootErrorPage = () => {
           />
         </figure>
       </div>
-
       <Footer />
     </div>
   );

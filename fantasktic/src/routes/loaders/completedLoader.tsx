@@ -13,9 +13,9 @@ const APPWRITE_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const getTasks = async () => {
   try {
     return await databases.listDocuments(APPWRITE_DATABASE_ID, "tasks", [
-      Query.equal("userId", getUserId()), // Gets tasks that pertains to the current user
-      Query.equal("completed", true), // Gets complete tasks
-      Query.orderDesc("$updatedAt"), // Order tasks by last updated
+      Query.equal("userId", getUserId()), // Gets tasks that pertains to the current user.
+      Query.equal("completed", true), // Gets complete tasks.
+      Query.orderDesc("$updatedAt"), // Order tasks by last updated.
     ]);
   } catch (err) {
     console.log(err);

@@ -58,6 +58,9 @@ type ProjectFormProps = {
   onSubmit?: (formData: ProjectForm) => void;
 };
 
+// The ProjectForm component displays a dialog for the user to input their project information.
+// This component takes in defaultFormData to properly display project information if editing, or default values if creating.
+// The mode variable takes a string that's is either "create" or "edit" which dictates what information will be on the form.
 const ProjectForm: React.FC<ProjectFormProps> = ({
   defaultFormData = DEFAULT_FORM_DATA,
   mode,
@@ -79,6 +82,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     taskGenPrompt: taskGenPrompt,
   });
 
+  // React's useEffect is utilized to keep formData up to date while users make changes to the form.
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -90,10 +94,12 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     }));
   }, [projectName, colorName, colorHex, aiTaskGen, taskGenPrompt]);
 
+  // Memoize the submit function to efficiently submit formData based on what was passed in for onSubmit (i.e. PUT or POST from promise function).
   const handleSubmit = useCallback(() => {
     if (onSubmit) onSubmit(formData);
   }, [onSubmit, formData]);
 
+  // Helper function to give the "Enter" key submit functionality for use in Input components.
   const handleKeySubmit = useCallback(
     (
       keyPressEvent: React.KeyboardEvent<
@@ -201,6 +207,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
           </Popover>
         </div>
 
+        {/* If the form is called in create mode, provide an AI Task Gen section to let AI create the tasks. */}
         {mode === "create" && (
           <div className="border rounded-md mt-6">
             <div className="flex items-center gap-3 py-2 px-3">

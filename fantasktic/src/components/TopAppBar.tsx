@@ -18,16 +18,18 @@ type TopAppBarProps = {
   taskCount?: number;
 };
 
+// TopAppBar Component displays the title of the page and the taskCounts while also providing access to the sideAppBar.
 const TopAppBar: React.FC<TopAppBarProps> = ({ title, taskCount }) => {
   const [showTitle, setShowTitle] = useState(false);
 
+  // This useEffect runs once to add a scroll event listener to decide whether to display the title or not.
   useEffect(() => {
-    const listener = () => setShowTitle(window.scrollY > 70);
+    const listener = () => setShowTitle(window.scrollY > 70); // Shows the title when window is above 70 pixels
 
-    listener();
-    window.addEventListener("scroll", listener);
+    listener(); // Calls listener for inital mount.
+    window.addEventListener("scroll", listener); // Adds event listener to the scroll to know when the window is scrolling.
 
-    return () => window.removeEventListener("scroll", listener);
+    return () => window.removeEventListener("scroll", listener); // Removes listener when component unmounts for cleanup.
   }, []);
 
   return (

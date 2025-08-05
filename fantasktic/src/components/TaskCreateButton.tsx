@@ -14,6 +14,7 @@ type TaskCreateButtonProps = Omit<
   "className"
 >;
 
+// Component TaskCreateButton was separately declared so that it can be styled here and exported to all the different pages.
 const TaskCreateButton: React.FC<TaskCreateButtonProps> = (props) => {
   return (
     <Button

@@ -9,6 +9,7 @@ import type { Task } from "@/types";
 // Env Variables
 const APPWRITE_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 
+// CreateTask is an async function that will attempt to create a new task in the database.
 const createTask = async (data: Task) => {
   try {
     return await databases.createDocument(
@@ -22,12 +23,13 @@ const createTask = async (data: Task) => {
   }
 };
 
+// Async function updateTask takes the updated task data and attempts to PUT it into the database.
 const updateTask = async (data: Task) => {
   const documentId = data.id; // Extract document id from the data
 
   if (!documentId) throw new Error("Task id not found!");
 
-  delete data.id; // Deletes the id field from the data after extraction.
+  delete data.id; // Deletes the id field from the data after extraction since only the contents need to be updated.
 
   try {
     return await databases.updateDocument(
@@ -41,6 +43,7 @@ const updateTask = async (data: Task) => {
   }
 };
 
+// DeleteTask is will attempt to delete the provided data from the database based on the taskId.
 const deleteTask = async (data: Task) => {
   const documentId = data.id;
 

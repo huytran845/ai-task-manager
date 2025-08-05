@@ -9,9 +9,10 @@ import Footer from "@/components/Footer";
 import { logo } from "@/assets";
 import { LoaderCircleIcon } from "lucide-react";
 
+// Main layout for the landing pages of the web application.
 const RootLayout = () => {
   const navigation = useNavigation();
-  const isLoading = navigation.state === "loading" && !navigation.formData;
+  const isLoading = navigation.state === "loading" && !navigation.formData; // Sets isLoading when navigating pages, but not on form submissions.
 
   return (
     <>
@@ -24,7 +25,7 @@ const RootLayout = () => {
 
         <Footer />
 
-        {/* Background Shapes */}
+        {/* Background Shapes for Aesthetic */}
         <div className="bg-primary/20 absolute top-20 left-0 w-80 h-10 rotate-45 origin-top-left blur-3xl"></div>
         <div className="bg-primary/20 absolute top-20 right-0 w-80 h-10 -rotate-45 origin-top-right blur-3xl"></div>
         <div className="bg-primary/20 absolute bottom-20 left-0 w-80 h-10 -rotate-45 origin-bottom-left blur-3xl"></div>

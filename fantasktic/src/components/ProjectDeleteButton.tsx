@@ -30,14 +30,17 @@ type ProjectDeleteButtonProps = {
   defaultFormData: Project;
 };
 
+// ProjectDeleteButton is a component used for deleting the project that this component is used in.
+// Upon clicking the button a confirmation dialog will popup allowing the user to confirm their decision.
 const ProjectDeleteButton: React.FC<ProjectDeleteButtonProps> = ({
   defaultFormData,
 }) => {
   const fetcher = useFetcher();
   const location = useLocation();
   const navigate = useNavigate();
+  // Using useCallback to memoize the function so that the function won't constantly be recomputated if used with the same arguments (aka repeat deletes and undo).
   const handleProjectDelete = useCallback(async () => {
-    // Navigate to inbox page if deleting project from project details page
+    // Navigate to inbox page if deleting project from its project details page.
     if (location.pathname === `/app/projects/${defaultFormData.id}`) {
       navigate("/app/inbox");
     }

@@ -54,6 +54,7 @@ type TaskCardProps = {
   taskContent: string;
 };
 
+// The TaskCard Component is what houses a Task's information and displays it to the user.
 const TaskCard: React.FC<TaskCardProps> = ({
   id,
   completed,
@@ -65,12 +66,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
   const taskCharLength: number = 40;
   const location = useLocation();
   const fetcher = useFetcher();
-  const fetcherTask = fetcher.json as Task;
+  const fetcherTask = fetcher.json as Task; // Fetches data from the closest loader getting current page's task.
   const task: Task = {
     ...{ id, taskContent, completed, dueDate, projectId },
     ...fetcherTask,
-  }; // Using spread syntax to merge the new and existing data to ensure no missing data occurs
+  }; // Using spread syntax to merge the new and existing data to ensure no missing data occurs.
   const [showTaskForm, setShowTaskForm] = useState(false);
+
+  // Memoize completeTask to efficiently mark complete if user decides to complete/undo a task multiple times.
   const handleCompleteTask = useCallback(
     async (completed: boolean) => {
       return await fetcher.submit(JSON.stringify({ id: task.id, completed }), {
@@ -79,11 +82,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
         encType: "application/json",
       });
     },
-    [task.id, task.completed],
+    [task.id],
   );
 
   return (
     <>
+      {/* Only show the task card if it isn't currently being edited. */}
       {!showTaskForm && (
         <div className="group/card relative flex gap-4 border-b-2 mt-2">
           <Button
@@ -178,6 +182,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           </Card>
 
           <div className="absolute top-1.5 right-0 bg-background ps-1 shadow-[-10px_0_5px_hsl(var(--background))] flex items-center gap-1 opacity-0 group-hover/card:opacity-100 focus-within:opacity-100 max-md:opacity-100">
+            {/* Only allow the user to edit the task if it's not marked as complete. */}
             {!task.completed && (
               <Tooltip delayDuration={400}>
                 <TooltipTrigger asChild>
@@ -186,7 +191,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                     size="icon"
                     className="w-6 h-6 text-muted-foreground mt-1"
                     aria-label="Edit Task"
-                    onClick={() => setShowTaskForm(true)}
+                    onClick={() => setShowTaskForm(true)} // If user wants to edit show the taskForm on page instead of the taskCard.
                   >
                     <EditIcon />
                   </Button>
@@ -195,6 +200,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 <TooltipContent>Edit Task</TooltipContent>
               </Tooltip>
             )}
+            {/* If user wants to delete the task a dialog will popup for confirmation. */}
             <AlertDialog>
               <Tooltip delayDuration={400}>
                 <TooltipTrigger asChild>
@@ -246,6 +252,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
         </div>
       )}
 
+      {/* Triggers if user chooses to edit a task, and the form contains all the current task data. */}
       {showTaskForm && (
         <TaskForm
           className="my-1"
@@ -262,7 +269,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
               encType: "application/json",
             });
 
-            setShowTaskForm(false);
+            setShowTaskForm(false); // Closes task form after edit.
           }}
         />
       )}

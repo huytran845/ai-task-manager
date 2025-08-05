@@ -18,6 +18,7 @@ import { CircleIcon } from "lucide-react";
 // Types
 import type { Models } from "appwrite";
 
+// Upcoming tasks that have dueDates after today are listed on this page.
 const UpcomingPage = () => {
   const [showTaskForm, setShowTaskForm] = useState(false);
 

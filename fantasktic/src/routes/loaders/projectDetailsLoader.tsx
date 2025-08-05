@@ -10,6 +10,7 @@ const APPWRITE_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 // Types
 import type { LoaderFunction } from "react-router";
 
+// GetProject fetches the desired project based on the provided projectId.
 const getProject = async (projectId: string) => {
   try {
     const project = await databases.getDocument(
@@ -18,6 +19,7 @@ const getProject = async (projectId: string) => {
       projectId,
     );
 
+    // Check if user has ownership of the project before returning.
     if (project.userId !== getUserId()) {
       throw new Error(
         "Unauthorized: Current user doesn't match requested project owner.",

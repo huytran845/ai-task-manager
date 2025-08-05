@@ -4,8 +4,11 @@ import { GoogleGenAI } from "@google/genai";
 // Env Variables
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
+// Using Google Gemini API for AI task generation.
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
+// The getAIResponse function prompts the gemini model with predefined rules that will be used to generate the user's tasks.
+// It will generate a response based on the provided data schema which will align with the structuring used in the application.
 async function getAiResponse(prompt: string): Promise<string | undefined> {
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",

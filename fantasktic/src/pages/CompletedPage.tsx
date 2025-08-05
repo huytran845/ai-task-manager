@@ -15,6 +15,7 @@ import { CheckCircle2Icon } from "lucide-react";
 // Types
 import type { Models } from "appwrite";
 
+// CompletedPage houses all the user's tasks that has been marked as completed.
 const CompletedPage = () => {
   const iconSize = 16;
   const fetcher = useFetcher();

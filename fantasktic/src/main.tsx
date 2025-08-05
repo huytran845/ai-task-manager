@@ -23,6 +23,7 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Clerk Publishable Key");
 }
 
+// Main variable to store and persist theme through pages.
 const theme = (() => {
   const storedTheme = localStorage.getItem("theme") || "dark";
   return storedTheme;

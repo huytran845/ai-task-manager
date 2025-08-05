@@ -1,6 +1,7 @@
 // Components
 import { Skeleton } from "@/components/ui/skeleton";
 
+// The TaskCardSkeleton Component acts as a loading component for fetching task card.
 const TaskCardSkeleton = () => {
   return (
     <div className="flex gap-4 items-center border-b pt-2 pb-4">

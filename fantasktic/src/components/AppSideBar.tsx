@@ -53,6 +53,7 @@ import { SIDEBAR_LINKS } from "@/constants";
 // Types
 import type { AppLoaderData } from "@/routes/loaders/appLoader";
 
+// AppSidebar component for web app that showcases user's tasks and projects
 const AppSidebar = () => {
   const location = useLocation();
   const projects = useProjects();
@@ -118,7 +119,6 @@ const AppSidebar = () => {
                   )}
                 </SidebarMenuItem>
               ))}
-              <SidebarMenuItem></SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -157,6 +157,7 @@ const AppSidebar = () => {
 
             <CollapsibleContent>
               <SidebarGroupContent>
+                {/* Displays on the 6 most recent projects */}
                 <SidebarMenu>
                   {projects?.documents
                     .slice(0, 6)
@@ -196,6 +197,7 @@ const AppSidebar = () => {
                       </SidebarMenuItem>
                     ))}
 
+                  {/* All projects link page, only appears if there are any projects */}
                   {projects !== null && (
                     <SidebarMenuItem>
                       <SidebarMenuButton
@@ -213,6 +215,7 @@ const AppSidebar = () => {
                     </SidebarMenuItem>
                   )}
 
+                  {/* Edge case for when there are no projects to display */}
                   {!projects?.total && (
                     <SidebarMenuItem>
                       <p className="text-muted-foreground text-sm p-2 pl-4">
@@ -227,6 +230,7 @@ const AppSidebar = () => {
         </Collapsible>
       </SidebarContent>
 
+      {/* User button from clerk to deal with account options */}
       <SidebarFooter>
         <UserButton
           showName

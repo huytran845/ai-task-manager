@@ -18,6 +18,7 @@ import { CircleIcon } from "lucide-react";
 // Types
 import type { Models } from "appwrite";
 
+// The primary task page that displays all of the user's uncompleted tasks.
 const InboxPage = () => {
   const [showTaskForm, setShowTaskForm] = useState(false);
 
@@ -60,12 +61,14 @@ const InboxPage = () => {
             ),
           )}
 
+          {/* Display the skeleton when fetching data. */}
           {fetcher.state !== "idle" && <TaskCardSkeleton />}
 
           {!showTaskForm && (
             <TaskCreateButton onClick={() => setShowTaskForm(true)} />
           )}
 
+          {/* If there are no tasks and the user isn't making a new one, show the empty state. */}
           {!tasks.total && !showTaskForm && <TaskEmptyState type="inbox" />}
 
           {showTaskForm && (

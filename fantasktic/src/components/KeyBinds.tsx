@@ -5,6 +5,7 @@ type KeyBindsProps = {
   keyBindsList: string[];
 };
 
+// The KeyBinds component accepts an array of strings that list the keyboard combinations for a shortcut.
 const KeyBinds: React.FC<KeyBindsProps> = ({ keyBindsList }) => {
   return (
     <div className="space-x-1">

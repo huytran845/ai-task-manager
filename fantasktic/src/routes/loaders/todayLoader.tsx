@@ -14,10 +14,10 @@ const APPWRITE_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const getTasks = async () => {
   try {
     return await databases.listDocuments(APPWRITE_DATABASE_ID, "tasks", [
-      Query.equal("userId", getUserId()), // Gets tasks that pertains to the current user
-      Query.equal("completed", false), // Gets incomplete tasks
+      Query.equal("userId", getUserId()), // Gets tasks that pertains to the current user.
+      Query.equal("completed", false), // Gets incomplete tasks.
       Query.and([
-        // Gets the tasks ranging from after today but before tomorrow with precise ISO format
+        // Gets the tasks ranging from after today but before tomorrow with precise ISO format.
         Query.greaterThanEqual("dueDate", startOfToday().toISOString()),
         Query.lessThan("dueDate", startOfTomorrow().toISOString()),
       ]),

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useAuth } from "@clerk/clerk-react";
 
+// The AuthSyncPage verifies user credentials and redirects them to the appropriate pages.
 const AuthSyncPage = () => {
   const navigate = useNavigate();
   const { isSignedIn, isLoaded, userId } = useAuth();
@@ -10,9 +11,9 @@ const AuthSyncPage = () => {
   useEffect(() => {
     if (!isLoaded) return;
 
-    // Returns the user to home page if they failed to sign in
+    // Returns the user to home page if they failed to sign in.
     if (!isSignedIn) {
-      // Removes stored user if user is no longer signed in
+      // Removes stored user if user is no longer signed in.
       if (localStorage.getItem("clerkUserId")) {
         localStorage.removeItem("clerkUserId");
       }
