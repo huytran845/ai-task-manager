@@ -19,4 +19,4 @@ This isn’t a polished enterprise tool, but instead a playground for experiment
 - Semantic HTML and ARIA for accessibility
 
 ## Getting Started  
-Visit the website at: "" and check it out! Create an account and get to managing your tasks and projects today!
+Visit the website at: [Fantasktic](fantasktic.vercel.app) and check it out! Create an account and get to managing your tasks and projects today!
