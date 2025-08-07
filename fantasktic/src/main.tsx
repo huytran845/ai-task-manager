@@ -1,5 +1,5 @@
 // Node Modules
-import { StrictMode } from "react";
+import { StrictMode, useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "@dr.pogodin/react-helmet";
 import { RouterProvider } from "react-router";
@@ -24,65 +24,14 @@ if (!PUBLISHABLE_KEY) {
 }
 
 // Main variable to store and persist theme through pages.
-const theme = (() => {
-  const storedTheme = localStorage.getItem("theme") || "dark";
-  return storedTheme;
-})();
+// const theme = (() => {
+//   const storedTheme = localStorage.getItem("theme") || "dark";
+//   return storedTheme;
+// })();
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <HelmetProvider>
-      <ClerkProvider
-        publishableKey={PUBLISHABLE_KEY}
-        afterSignOutUrl="/auth-sync"
-        signInForceRedirectUrl={SIGN_IN_FORCE_REDIRECT_URL}
-        signUpForceRedirectUrl={SIGN_UP_FORCE_REDIRECT_URL}
-        appearance={{
-          baseTheme: theme === "dark" ? dark : undefined,
-          variables:
-            theme === "dark"
-              ? {
-                  // Dark Mode Clerk Theme Variables
-                  colorBackground: "hsl(20 14.3% 4.1%)",
-                  colorText: "hsl(60 9.1% 97.8%)",
-                  colorDanger: "hsl(0 72.2% 50.6%)",
-                  colorTextSecondary: "hsl(24 5.4% 63.9%)",
-                  colorInputBackground: "hsl(20 14.3% 4.1%)",
-                  colorInputText: "hsl(60 9.1% 97.8%)",
-                  borderRadius: "0.35rem",
-                  colorPrimary: "hsl(20.5 90.2% 48.2%)",
-                  colorTextOnPrimaryBackground: "hsl(60 9.1% 97.8%)",
-                }
-              : {
-                  // Light Mode Clerk Theme Variables
-                  colorBackground: "hsl(97 100% 99%)",
-                  colorText: "hsl(220 15% 15%)",
-                  colorDanger: "hsl(0 80% 60%)",
-                  colorTextSecondary: "hsl(220 10% 40%)",
-                  colorInputBackground: "hsl(220 10% 95%)",
-                  colorInputText: "hsl(220 15% 15%)",
-                  borderRadius: "0.35rem",
-                  colorPrimary: "hsl(220 80% 50%)",
-                  colorTextOnPrimaryBackground: "hsl(0 0% 100%)",
-                },
-        }}
-      >
-        <RouterProvider router={router} />
-      </ClerkProvider>
-    </HelmetProvider>
-  </StrictMode>,
-);
-
-// Previous cleaner implementation, but incompatible with React's HMR so using simpler approach
-// const Root = () => {
-//   const [theme, setTheme] = useState("dark");
-
-//   useEffect(() => {
-//     setTheme(localStorage.getItem("theme") || "dark");
-//   }, []);
-
-//   return (
-//     <StrictMode>
+// createRoot(document.getElementById("root")!).render(
+//   <StrictMode>
+//     <HelmetProvider>
 //       <ClerkProvider
 //         publishableKey={PUBLISHABLE_KEY}
 //         afterSignOutUrl="/auth-sync"
@@ -93,7 +42,7 @@ createRoot(document.getElementById("root")!).render(
 //           variables:
 //             theme === "dark"
 //               ? {
-//                   // Dark Mode Clerk Variable Theme
+//                   // Dark Mode Clerk Theme Variables
 //                   colorBackground: "hsl(20 14.3% 4.1%)",
 //                   colorText: "hsl(60 9.1% 97.8%)",
 //                   colorDanger: "hsl(0 72.2% 50.6%)",
@@ -105,7 +54,7 @@ createRoot(document.getElementById("root")!).render(
 //                   colorTextOnPrimaryBackground: "hsl(60 9.1% 97.8%)",
 //                 }
 //               : {
-//                   // Light Mode Clerk Variable Theme
+//                   // Light Mode Clerk Theme Variables
 //                   colorBackground: "hsl(97 100% 99%)",
 //                   colorText: "hsl(220 15% 15%)",
 //                   colorDanger: "hsl(0 80% 60%)",
@@ -120,8 +69,64 @@ createRoot(document.getElementById("root")!).render(
 //       >
 //         <RouterProvider router={router} />
 //       </ClerkProvider>
-//     </StrictMode>
-//   );
-// };
+//     </HelmetProvider>
+//   </StrictMode>,
+// );
 
-//createRoot(document.getElementById("root")!).render(<Root />);
+// Previous cleaner implementation, but incompatible with React's HMR so using simpler approach
+const Root = () => {
+  const [theme, setTheme] = useState("dark");
+
+  useEffect(() => {
+    setTheme(localStorage.getItem("theme") || "dark");
+  }, []);
+
+  const clerkAppearance = useMemo(
+    () => ({
+      baseTheme: theme === "dark" ? dark : undefined,
+      variables:
+        theme === "dark"
+          ? {
+              colorBackground: "hsl(20 14.3% 4.1%)",
+              colorText: "hsl(60 9.1% 97.8%)",
+              colorDanger: "hsl(0 72.2% 50.6%)",
+              colorTextSecondary: "hsl(24 5.4% 63.9%)",
+              colorInputBackground: "hsl(20 14.3% 4.1%)",
+              colorInputText: "hsl(60 9.1% 97.8%)",
+              borderRadius: "0.35rem",
+              colorPrimary: "hsl(20.5 90.2% 48.2%)",
+              colorTextOnPrimaryBackground: "hsl(60 9.1% 97.8%)",
+            }
+          : {
+              colorBackground: "hsl(97 100% 99%)",
+              colorText: "hsl(220 15% 15%)",
+              colorDanger: "hsl(0 80% 60%)",
+              colorTextSecondary: "hsl(220 10% 40%)",
+              colorInputBackground: "hsl(220 10% 95%)",
+              colorInputText: "hsl(220 15% 15%)",
+              borderRadius: "0.35rem",
+              colorPrimary: "hsl(220 80% 50%)",
+              colorTextOnPrimaryBackground: "hsl(0 0% 100%)",
+            },
+    }),
+    [theme],
+  );
+
+  return (
+    <StrictMode>
+      <HelmetProvider>
+        <ClerkProvider
+          publishableKey={PUBLISHABLE_KEY}
+          afterSignOutUrl="/auth-sync"
+          signInForceRedirectUrl={SIGN_IN_FORCE_REDIRECT_URL}
+          signUpForceRedirectUrl={SIGN_UP_FORCE_REDIRECT_URL}
+          appearance={clerkAppearance}
+        >
+          <RouterProvider router={router} />
+        </ClerkProvider>
+      </HelmetProvider>
+    </StrictMode>
+  );
+};
+
+createRoot(document.getElementById("root")!).render(<Root />);
