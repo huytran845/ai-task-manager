@@ -18,5 +18,15 @@ This isn’t a polished enterprise tool, but instead a playground for experiment
 - Toast notifications using Sonner
 - Semantic HTML and ARIA for accessibility
 
+## Tech Stack
+| Category     | Tools & Libraries                          |
+|--------------|--------------------------------------------|
+| Frontend     | React, TypeScript, Tailwind CSS            |
+| Backend      | Appwrite (auth, database)                  |
+| AI           | Google Gemini API                          |
+| Styling      | Custom HSL-based themes via CSS variables  |
+| Auth UI      | Clerk with dynamic appearance configuration|
+
+
 ## Getting Started  
 Visit the website at: [Fantasktic](https://fantasktic.vercel.app) and check it out! Create an account and get to managing your tasks and projects today!
